@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Analysis - {{ product.name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Review Analysis</h1>
+            <p class="subtitle">{{ product.name }}</p>
+            <a href="/" class="back-link">← Back to Products</a>
+        </header>
+
+        <div class="review-section">
+            <div class="product-info">
+                <div class="product-image-large">
+                    <img src="{{ url_for('static', filename='images/' + product.image) }}" 
+                         alt="{{ product.name }}" 
+                         class="product-img-large"
+                         onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'300\'%3E%3Crect fill=\'%23667eea\' width=\'300\' height=\'300\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dy=\'.3em\' fill=\'white\' font-size=\'48\'%3E{{ product.name[0] }}%3C/text%3E%3C/svg%3E';">
+                </div>
+                <h2>{{ product.name }}</h2>
+            </div>
+
+            <div class="review-form">
+                <label for="review-text">Paste or type your review:</label>
+                <textarea id="review-text" rows="6" placeholder="Enter review text here..."></textarea>
+                <button onclick="analyzeReview({{ product.id }})" class="analyze-btn">Analyze Review</button>
+            </div>
+
+            <div id="loading" class="loading hidden">Analyzing review...</div>
+
+            <div id="result-section" class="result-section hidden">
+                <div id="result-label" class="result-label"></div>
+                <div id="result-chart" class="chart-container">
+                    <canvas id="chart-canvas"></canvas>
+                </div>
+                <div class="review-display">
+                    <h3>Analyzed Review:</h3>
+                    <p id="review-display-text"></p>
+                </div>
+                <button onclick="resetForm()" class="reset-btn">Analyze Another Review</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
